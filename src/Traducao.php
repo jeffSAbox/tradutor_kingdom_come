@@ -1,9 +1,9 @@
 <?php 
 
-namespace src;
+namespace app;
 
-use src\xml\Arquivo; 
-use vendor\Stichoza\GoogleTranslate\TranslateClient;
+use app\xml\Arquivo; 
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 /**
  * 
@@ -15,42 +15,40 @@ class Traducao
 	private $para;
 
 	private $arquivoXML;
+
+	private $palavrasNaoTraduzir;
 	
 	function __construct($de, $para)
 	{
 		$this->de = $de;
 		$this->para = $para;
+
+		$this->palavrasNaoTraduzir = Array(
+			"Drop body",
+		);
+
+
 	}
-
-	public function setArquivoXML(Arquivo $arquivoXML)
+ 
+	public function traduzir(Arquivo $arquivoXML)
 	{
-
-		$this->arquivoXML = $arquivoXML;
-
-	}
-
-	public function traduzir()
-	{
-
-		/*
+		
 		//Lingua de origem, Lingua de destino
-		$tr = new TranslateClient('en', 'ka');
+		$tr = new GoogleTranslate($this->para, $this->de);
 		 
-		//Irá apresentar "გამარჯობა მსოფლიო"
-		echo $tr->translate('Hello World!');
-		 
-		 
-		//Caso queira detecção automática de lingua, basta
-		//Lingua de origem, Lingua de destino
-		$tr = new TranslateClient(null, 'pt-BR');
-		 
-		//Irá apresentar "Olá Mundo'"
-		echo $tr->translate('Hello World!');
-		 
-		//Retornará a lingua que foi detectada automaticamente, no caso 'en'.
-		echo $tr->getLastDetectedSource();
-		*/
+		// TRADUZ O TEXTO
+		foreach( $arquivoXML->getXML() as $obj ){
 
+			//	PALAVRAS PARA NAO TRADUZIR
+			if( in_array($obj->Cell[1], $this->palavrasNaoTraduzir) ) continue;			
+
+			//	TRANSLATE
+			$obj->Cell[2] = $tr->translate($obj->Cell[1]);
+		}
+
+		// GERA O ARQUIVO TRADUZIDO
+		$arquivoXML->gerarArquivoTraduzido();
+		
 	}
 }
 

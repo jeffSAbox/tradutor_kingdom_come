@@ -27,13 +27,20 @@ $arquivos 	= scandir($pasta);
 
  			array_filter($arquivos, function($ar) use ($pasta){
  				if("xml" != pathinfo($pasta."/$ar", PATHINFO_EXTENSION)) return;
+
+ 				$check = false;
+ 				if( file_exists(str_replace("/en","/pt",$pasta)."/".$ar) ) $check = true;
+
  				echo "<tr>";
 
  				echo "<td>$ar</td>";
 
- 				echo "<td><button class='btn btn-primary'>Traduzir</button></td>";
+ 				if( !$check )
+ 					echo "<td><a class='btn btn-primary' href='traduzirArquivo.php?file=$ar' >Traduzir</a></td>";
+ 				else
+ 					echo "<td><a class='btn btn-success' href='javascript:void(0)' >Já traduzido</a></td>";
 
- 				echo "<td>check</td>";
+ 				echo "<td>".round(filesize("$pasta/$ar") / 1024, 2)." Kb</td>";
 
  				echo "</tr>";
  			});
