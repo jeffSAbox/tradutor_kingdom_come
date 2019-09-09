@@ -1,0 +1,17 @@
+{
+    "name": "jeff/kingdomcometraducao",
+    "authors": [
+        {
+            "name": "JeffSABox",
+            "email": "jeff_zb@msn.com"
+        }
+    ],
+    "autoload": {
+    	"psr-4": {
+    		"app\\": "/"
+    	}
+    },
+    "require": {
+        "stichoza/google-translate-php": "^4.0"
+    }
+}
