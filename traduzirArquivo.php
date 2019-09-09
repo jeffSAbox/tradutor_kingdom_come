@@ -1,6 +1,7 @@
 <?php 
 
-//require "autoload.php";
+set_time_limit(10*60);
+
 require 'vendor/autoload.php';
 
 use app\Traducao;
@@ -22,6 +23,10 @@ if( file_exists($arquivoXML->getCaminhoCompleto()) )
 	echo "<h3 style='color:green'>Arquivo traduzido com sucesso!</h3>";
 else
 	echo "<h3 style='color:red'>Acho que deu alguma coisa errada</h3>";
+
+echo "<hr/>";
+echo "<a href='/kingdom_come_traducao/'>Voltar para Home</a>";
+echo "<hr/>";
 
 echo "<pre>";
 var_dump($arquivoXML);
