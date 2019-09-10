@@ -77,6 +77,61 @@ class GerenciamentoArquivo extends Arquivo
 
 	}
 
+	public function split()
+	{
+
+		$limiteFrases = 1000;
+		$part = 1;
+		$i = 1;
+		$arr = Array();
+
+		$caminhoSplit = $this->caminho."/".basename($this->nome,".xml");
+		if( !file_exists($caminhoSplit) )
+		mkdir($caminhoSplit);
+
+		foreach( $this->xml as $obj ){
+
+			$arr[] = Array(
+			  	"Cell" => (String)$obj->Cell[0],
+			  	"Cell1" => (String)$obj->Cell[1],
+			  	"Cell2" => (String)$obj->Cell[2],
+			);
+
+			if( $i == $limiteFrases ){
+				$this->criarXML($arr, $caminhoSplit.'/'.$this->nome_base."_part$part.xml");
+				$part++;
+				$i = 0;
+				$arr = Array();
+			}
+
+			$i++;
+		}
+
+		if( count($arr) )
+			$this->criarXML($arr, $caminhoSplit.'/'.$this->nome_base."_part$part.xml");
+
+	}
+
+	private function criarXML($arr, $caminho)
+	{
+
+		$xmlstr = '<?xml version="1.0"?><Table></Table>';
+		$sxe = new \SimpleXMLElement($xmlstr);
+
+		foreach( $arr as $frases ){
+
+			$row = $sxe->addChild("Row",'');
+
+			foreach( $frases as $frase ){
+				$row->addChild("Cell", $frase);
+			}
+
+		}
+
+		$sxe->asXML($caminho);
+
+	}
+
 }
 
 

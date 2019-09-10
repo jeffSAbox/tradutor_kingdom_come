@@ -2,14 +2,14 @@
 
 require 'vendor/autoload.php';
 
-use app\xml\Arquivo;
+use app\xml\GerenciamentoArquivo;
 
 try{
 
 $arquivo 	= $_GET['file'];
 $pasta 		= __DIR__."/arquivos/en";
 
-$arquivoXML = new Arquivo($pasta, $arquivo);
+$arquivoXML = new GerenciamentoArquivo($pasta, $arquivo);
 
 //	DIVIDIR O ARQUIVOS EM VARIOS
 $arquivoXML->split();
