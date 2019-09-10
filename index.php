@@ -45,6 +45,13 @@ $arquivos 	= scandir($pasta);
  				echo "<a class='btn btn-warning' href='splitArquivo.php?file=$ar' >Split</a>";
  				echo "</td>";
 
+ 				$check = false;
+ 				if( file_exists($pasta."/concatenado/".basename($ar,".xml")."_part1.txt") ) $check = true;
+ 				if( !$check )
+ 					echo "<td><a class='btn btn-secondary' href='concatenarArquivo.php?file=$ar' >Concatenar</a></td>";
+ 				else
+ 					echo "<td><a class='btn btn-warning' href='traduzirViaTextoArquivo.php?file=$ar' >Traduzir via Texto</a></td>";
+
  				echo "<td>".round(filesize("$pasta/$ar") / 1024, 2)." Kb</td>";
 
  				echo "</tr>";
