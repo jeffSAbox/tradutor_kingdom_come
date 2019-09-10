@@ -65,6 +65,15 @@ class Arquivo
 
 	}
 
+	public function split()
+	{
+
+		$caminhoSplit = $this->caminho."/".basename($this->nome,".xml");
+		if( !file_exists($caminhoSplit) )
+		mkdir($caminhoSplit);
+
+	}
+
 }
 
 
