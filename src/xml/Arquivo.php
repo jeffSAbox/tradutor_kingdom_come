@@ -8,14 +8,30 @@ namespace app\xml;
 class Arquivo
 {
 	
-	private $xml;
-	private $nome;
-	private $caminho;
-	private $caminhoCompleto;
+	protected $xml;
+	protected $nome;
+	protected $nome_base;
+	protected $caminho;
+	protected $caminhoCompleto;
 
 	public function getXML(): Object
 	{
 		return $this->xml;
+	}
+
+	public function getNome(): String
+	{
+		return $this->nome;
+	}
+
+	public function getNomeBase(): String
+	{
+		return $this->nome_base;
+	}
+
+	public function getCaminho(): String
+	{
+		return $this->caminho;
 	}
 
 	public function setXML($xml)
@@ -28,7 +44,7 @@ class Arquivo
 		$this->caminho = $caminho;
 	}
 
-	public function getCaminhoCompleto():String
+	public function getCaminhoCompleto(): String
 	{
 		return $this->caminhoCompleto;
 	}
@@ -40,28 +56,7 @@ class Arquivo
 		$this->caminho = $caminho;
 
 		$this->caminhoCompleto = "$caminho/$nome";
-
-		$this->lerArquivoParaXML();
-	}
-
-	public function lerArquivoParaXML()
-	{
-
-		if( empty($this->nome) )
-			throw new \Exception("Nenhum arquivo foi passado via _GET", 1);
-			
-		if( "xml" != pathinfo($this->caminhoCompleto, PATHINFO_EXTENSION) )
-			throw new \Exception("O $this->caminhoCompleto não é um XML", 1);
-
-		$this->xml = simplexml_load_file($this->caminhoCompleto);
-
-	}
-
-	public function gerarArquivoTraduzido()
-	{
-
-		$caminhoPT = str_replace("/en/","/pt/",$this->caminhoCompleto);
-		$this->xml->asXml($caminhoPT);
+		$this->nome_base = basename($nome,".xml");
 
 	}
 

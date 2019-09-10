@@ -20,7 +20,7 @@ $arquivos 	= scandir($pasta);
  	<br><br>
  	<table class="table">
 
- 		<thead><tr><th colspan='3'>Lista de arquivos</th></tr></thead>
+ 		<thead><tr><th colspan='4'>Lista de arquivos</th></tr></thead>
 
  		<tbody>
  			<?php 
@@ -39,6 +39,14 @@ $arquivos 	= scandir($pasta);
  					echo "<td><a class='btn btn-primary' href='traduzirArquivo.php?file=$ar' >Traduzir</a></td>";
  				else
  					echo "<td><a class='btn btn-success' href='javascript:void(0)' >Já traduzido</a></td>";
+
+
+ 				$check = false;
+ 				if( file_exists($pasta."/concatenado/".basename($ar,".xml")."_part1.txt") ) $check = true;
+ 				if( !$check )
+ 					echo "<td><a class='btn btn-secondary' href='concatenarArquivo.php?file=$ar' >Concatenar</a></td>";
+ 				else
+ 					echo "<td><a class='btn btn-warning' href='traduzirViaTextoArquivo.php?file=$ar' >Traduzir via Texto</a></td>";
 
  				echo "<td>".round(filesize("$pasta/$ar") / 1024, 2)." Kb</td>";
 
