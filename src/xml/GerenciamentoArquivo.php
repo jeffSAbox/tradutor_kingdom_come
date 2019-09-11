@@ -39,7 +39,8 @@ class GerenciamentoArquivo extends Arquivo
 	public function concatenar()
 	{
 
-		$limiteFrases = 500;
+		$limiteFrases = 900;
+		//$limiteFrases = 5;
 		$textoFinal = "";
 		$part = 1;
 		$i = 1;

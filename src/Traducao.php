@@ -5,6 +5,8 @@ namespace app;
 use app\xml\Arquivo; 
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
+use app\_funcao\TextoTratamento;
+
 /**
  * 
  */
@@ -50,6 +52,46 @@ class Traducao
 		$arquivoXML->gerarArquivoTraduzido();
 		
 	}
+
+	public function traduzirViaArquivosTxt(Arquivo $arquivoXML)
+	{
+
+		$arrGeral = Array();
+		$glob = $arquivoXML->getCaminho()."/concatenado/".$arquivoXML->getNomeBase()."_part*.txt";
+
+		foreach(glob($glob) as $arquivoAtual)   
+	    {    
+
+			$handle = fopen($arquivoAtual, "r");
+			$contents = fread($handle, filesize($arquivoAtual));
+			fclose($handle);
+
+			$arrGeral = array_merge($arrGeral,explode("||",trim(TextoTratamento::corrigir($contents),"||")));
+
+	    }
+
+
+	    $i = 0;
+	    $lastObj = "";
+	    foreach( $arquivoXML->getXML() as $obj ){
+
+
+	    	if( $lastObj == trim($arrGeral[$i]) and count($arquivoXML->getXML()) < count($arrGeral) ){
+	    		unset($arrGeral[$i]);
+
+	    		$arrGeral = array_values($arrGeral);
+	    	} 
+
+	    	$obj->Cell[2] = trim($arrGeral[$i]);
+
+	    	$lastObj = $obj->Cell[2];
+	    	$i++;
+	    }
+
+	    $arquivoXML->gerarArquivoTraduzido();
+
+	}
+
 }
 
  ?>
