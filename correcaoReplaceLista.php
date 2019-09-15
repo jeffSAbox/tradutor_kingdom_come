@@ -11,13 +11,13 @@ use app\Traducao;
 try{
 
 $arquivo 	= $_GET['file'];
-$pasta 		= __DIR__."/arquivos/en";
+$pasta 		= __DIR__."/arquivos/pt";
 
 $translate = new Traducao("en","pt");
 $arquivoXML = new GerenciamentoArquivo($pasta, $arquivo);
 
-//	TRADUZ VIA ARQUIVOS DE TXT :> ARQUIVOS/EN/CONCATENADO/...
-$translate->traduzirViaArquivosTxt($arquivoXML);
+//	LISTA AS CELL E VERIFICA SE PRECISA DE REPLACE LISTA
+$translate->cerrecaoReplaceLista($arquivoXML);
 
 if( file_exists($arquivoXML->getCaminhoCompleto()) )
 	echo "<h3 style='color:green'>Arquivo traduzido(via txt) com sucesso!</h3>";

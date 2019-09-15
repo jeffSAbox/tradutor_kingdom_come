@@ -2,6 +2,8 @@
 
 namespace app\xml;
 
+use app\_funcao\TextoTratamento;
+
 /**
  * 
  */
@@ -39,7 +41,7 @@ class GerenciamentoArquivo extends Arquivo
 	public function concatenar()
 	{
 
-		$limiteFrases = 900;
+		$limiteFrases = 300;
 		//$limiteFrases = 5;
 		$textoFinal = "";
 		$part = 1;
@@ -48,10 +50,11 @@ class GerenciamentoArquivo extends Arquivo
 
 		foreach( $this->xml as $obj ){
 
-			$textoFinal.= $obj->Cell[1]."||";
+			$textoFinal.= TextoTratamento::criarTags($obj->Cell[1].PHP_EOL."[ - ]".PHP_EOL);
 
 			if( $i == $limiteFrases ){
-				$this->criarArquivo($textoFinal, $this->caminho.'/concatenado/'.$this->nome_base."_part$part.txt");
+				$part_string = str_pad($part,8,"0",STR_PAD_LEFT);
+				$this->criarArquivo($textoFinal, $this->caminho.'/concatenado/'.$this->nome_base."_part$part_string.txt");
 				$part++;
 				$i = 0;
 				$textoFinal = "";
@@ -61,8 +64,9 @@ class GerenciamentoArquivo extends Arquivo
 			$cont++;
 		}
 
+		$part_string = str_pad($part,8,"0",STR_PAD_LEFT);
 		if( !empty($textoFinal) )
-			$this->criarArquivo($textoFinal, $this->caminho.'/concatenado/'.$this->nome_base."_part$part.txt");
+			$this->criarArquivo($textoFinal, $this->caminho.'/concatenado/'.$this->nome_base."_part$part_string.txt");
 
 		echo "TOTAL FRASES: $cont";
 

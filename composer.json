@@ -9,7 +9,10 @@
     "autoload": {
     	"psr-4": {
     		"app\\": "src/"
-    	}
+    	},
+        "classmap": [
+          "src/_funcao/TextoTratamento.php"
+        ]
     },
     "require": {
         "stichoza/google-translate-php": "^4.0"

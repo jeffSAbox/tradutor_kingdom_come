@@ -44,7 +44,7 @@ $arquivos 	= scandir($pasta);
 	 				echo "</td>";
 
 	 				$check = false;
-	 				if( file_exists($pasta."/concatenado/".basename($ar,".xml")."_part1.txt") ) $check = true;
+	 				if( file_exists($pasta."/concatenado/".basename($ar,".xml")."_part00000001.txt") ) $check = true;
 	 				if( !$check )
 	 					echo "<td><a class='btn btn-secondary' href='concatenarArquivo.php?file=$ar' >Concatenar</a></td>";
 	 				else
@@ -53,7 +53,7 @@ $arquivos 	= scandir($pasta);
 	 				echo "<td>".round(filesize("$pasta/$ar") / 1024, 2)." Kb</td>";
  				}
  				else
- 					echo "<td colspan='4'><a class='btn btn-success' href='javascript:void(0)' >Já traduzido</a></td>";
+ 					echo "<td colspan='4'><a class='btn btn-success' href='correcaoReplaceLista.php?file=$ar' >Já traduzido</a></td>";
 
  				echo "</tr>";
  			});

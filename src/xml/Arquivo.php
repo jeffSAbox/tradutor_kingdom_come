@@ -49,6 +49,11 @@ class Arquivo
 		return $this->caminhoCompleto;
 	}
 
+	public function setCaminhoCompleto($caminho)
+	{
+		$this->caminhoCompleto = $caminho;
+	}
+
 	function __construct($caminho, $nome)
 	{
 
