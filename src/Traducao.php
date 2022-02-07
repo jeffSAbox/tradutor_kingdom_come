@@ -114,7 +114,7 @@ class Traducao
 
 	    $arquivoXML->setCaminhoCompleto($arquivoXML->getCaminho()."/upload/".$arquivoXML->getNomeBase()."_pt.xml");
 	    
-	    $arquivoXML->gerarArquivoTraduzido();
+	    //$arquivoXML->gerarArquivoTraduzido();
 
 	}
 
